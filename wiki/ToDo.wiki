@@ -1,7 +1,7 @@
 #summary A list of unfinished features
 
 Player Score Editing
-  * ball _dragging_
+  * ball _dragging_ from plr rack panels
 *Video* integration
   * live display of video
   * replay

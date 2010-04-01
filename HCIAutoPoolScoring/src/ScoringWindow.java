@@ -29,8 +29,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
 	protected JTextField p1IDF = null;
 	protected JTextField p2IDF = null;
-	private JTextField p1RackScoreF = null;
-	private JTextField p2RackScoreF = null;		
+	protected JTextField p1RackScoreF = null;
+	protected JTextField p2RackScoreF = null;		
 	private JTextField p1TotalScoreF = null;
 	private JTextField p2TotalScoreF = null;	
 	private JTextField p1GoalF = null;
@@ -135,8 +135,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		p2IDF = new JTextField(p2Name, ncols);
 		p1RackScoreF = new JTextField("0", 3);
 		p2RackScoreF = new JTextField("0", 3);
-		p1RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT);
-		p2RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT);
+		p1RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT, 1);
+		p2RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT, 2);
 		p1TotalScoreF = new JTextField("0", 3);
 		p2TotalScoreF = new JTextField("0", 3);		
 		p1GoalF = new JTextField(Integer.toString(p1WinsAt), 3);
@@ -421,8 +421,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     public void ballSunk(int ball) {
     	if (p1selected) {
     		if (!virtualRack.ballAlreadySunk(ball)) {
-    			p1RackScore++;
-    			p1RackScoreF.setText(Integer.toString(p1RackScore));
+    			//p1RackScore++;
+    			//p1RackScoreF.setText(Integer.toString(p1RackScore));
     			p1TotalScore++;
     			p1TotalScoreF.setText(Integer.toString(p1RackScore));
     			
@@ -433,8 +433,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     		}
     	} else {
     		if (!virtualRack.ballAlreadySunk(ball)) {
-    			p2RackScore++;
-    			p2RackScoreF.setText(Integer.toString(p2RackScore));
+    			//p2RackScore++;
+    			//p2RackScoreF.setText(Integer.toString(p2RackScore));
     			p2TotalScore++;
     			p2TotalScoreF.setText(Integer.toString(p2TotalScore));
     			

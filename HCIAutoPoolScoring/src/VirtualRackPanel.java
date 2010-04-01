@@ -234,25 +234,21 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
 		
-		if(dragY >= 0 && dragY <= getHeight()){
+		if(dragY >= 0 && dragY <= getHeight() && dragX<0){
 			int dropPanel = -dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
 			if(dropPanel == 0){
 				//plr 2 panel
-				
 				AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.addBall(getBallImg(ballDragging), ballDragging);
 				removeBall(ballDragging);
-				AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = 0;
-				AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.repaint();
-				
 			}else if(dropPanel == 1){
 				// plr 1 panel
-				
 				AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.addBall(getBallImg(ballDragging), ballDragging);
 				removeBall(ballDragging);
-				AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = 0;
-				AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.repaint();
 			}
 		}
+		
+		AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = 0;
+		AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = 0;
 		
 		ballDragging = 0;
 		AutoPoolScorer.mainWindow.scoreWindow.repaint();

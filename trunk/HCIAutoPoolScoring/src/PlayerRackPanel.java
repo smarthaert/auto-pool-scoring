@@ -17,6 +17,8 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	private int panel_width;
 	private int panel_height;
 	
+	protected final int plrID;
+	
 	private Vector ball_images;
 	private Vector ball_numbers;
 	
@@ -27,9 +29,11 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	protected int dragX = 0;
 	protected int dragY = 0;
 	
-	public PlayerRackPanel(int width, int height) {
+	public PlayerRackPanel(int width, int height, int plrid) {
 		panel_width = width;
 		panel_height = height;
+		plrID = plrid;
+		
 		setPreferredSize(new Dimension(panel_width, panel_height));
 		ball_images = new Vector();
 		ball_numbers = new Vector();
@@ -41,6 +45,15 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	public void addBall( BufferedImage image, int i ) {
 		ball_images.add(image);
 		ball_numbers.add(i);
+		
+		if(plrID == 1){
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackScore++;
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p1RackScore));
+		}else if(plrID == 2){
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackScore++;
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2RackScore));
+		}
+		
 		repaint();
 	}	
 	

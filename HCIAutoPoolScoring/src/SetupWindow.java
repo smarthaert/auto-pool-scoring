@@ -132,7 +132,17 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "continue") {
 			System.out.println("continue");
+			AutoPoolScorer.mainWindow.scoreWindow.p1Name = this.player1name.getText();
+			AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText(this.player1name.getText());
+			
+			AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText();
+			AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText());
+			
+			
 			AutoPoolScorer.mainWindow.goScore();
+			
+			this.player1name.setText("");
+			this.player2name.setText("");
 			
 		} else if (e.getActionCommand() == "quit") {
 			System.out.println("quit");

@@ -23,6 +23,9 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	private final int MAX_BALLS_PER_COLUMN = 4; 
 	private final int SCALED_DIMENSIONS = 25;
 	
+	protected int ballDragging = 0;
+	protected int dragX = 0;
+	protected int dragY = 0;
 	
 	public PlayerRackPanel(int width, int height) {
 		panel_width = width;
@@ -61,6 +64,17 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 			g.drawImage(img, x, y, x + SCALED_DIMENSIONS, y + SCALED_DIMENSIONS,
 					0, 0, img.getWidth(), img.getHeight(), null);												
 		}
+		
+		if(ballDragging > 0){
+			BufferedImage img = AutoPoolScorer.mainWindow.scoreWindow.virtualRack.getBallImg(ballDragging);
+			
+			x = dragX-SCALED_DIMENSIONS/2;
+			y = dragY-SCALED_DIMENSIONS/2;
+			
+			g.drawImage(img, x, y, x + SCALED_DIMENSIONS, y + SCALED_DIMENSIONS,
+					0, 0, img.getWidth(), img.getHeight(), null);
+		}
+		
 	}
 
 	@Override

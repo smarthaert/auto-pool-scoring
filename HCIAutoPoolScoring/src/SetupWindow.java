@@ -74,7 +74,6 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		
 
 		continueButton.addActionListener(this);
-		
 		continueButton.setActionCommand("continue");
 		
 		addMouseListener(this);

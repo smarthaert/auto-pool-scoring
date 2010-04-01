@@ -72,13 +72,14 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("plrRack enter");
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("virRack exit");
 	}
 
 	@Override

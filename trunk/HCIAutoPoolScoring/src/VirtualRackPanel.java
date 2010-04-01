@@ -238,9 +238,13 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 		repaint();
 	}
 	
-	public void mouseEntered(MouseEvent e) { }
+	public void mouseEntered(MouseEvent e) {
+		System.out.println("virRack enter");
+	}
 	
-	public void mouseExited(MouseEvent e) { }
+	public void mouseExited(MouseEvent e) {
+		System.out.println("virRack exit");
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {

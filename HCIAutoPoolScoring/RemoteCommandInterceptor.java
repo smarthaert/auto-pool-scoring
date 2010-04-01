@@ -35,14 +35,20 @@ public class RemoteCommandInterceptor implements Runnable {
 				
 				if (cmd >= 1 && cmd <= 15) {
 					window.ballSunk(cmd);
-				} else if (cmd == 16 || cmd == 17) { // miss
+				} else if (cmd == 16) { // miss
 					window.animateTurnSelector();
-				}				
+				} else if (cmd == 17) { // fault
+					
+				} else if (cmd == 18) { // new rack return all balls to the rightmost pane and clear rack totals
+					window.clearRack();
+				}
 			}
 		} catch (SocketException e) {
 			System.out.println("Could not bind to port 9876");
 		} catch (IOException e ) {
 			System.out.println("IOException");
+		} catch (NumberFormatException e ) {
+			//move along, nothing to do here.
 		}
     }
 }

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.image.*;
 import javax.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -35,8 +36,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JTextField p1GoalF = null;
 	private JTextField p2GoalF = null;	
 	
-	private JPanel p1RackDetails = null;
-	private JPanel p2RackDetails = null;
+	private PlayerRackPanel p1RackDetails = null;
+	private PlayerRackPanel p2RackDetails = null;
 	private VirtualRackPanel virtualRack = null;
 	
 	private JSeparator horiz1 = null;
@@ -55,13 +56,14 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JButton editButton = null;
 	private JButton statsButton = null;
 	private JButton replayButton = null;
+	private JButton doneButton = null;
 	
 	private JLayeredPane layeredPane = null;
 	
 	private final int PANEL_WIDTH = 1024;
 	private final int PANEL_HEIGHT = 768;
-	private final int VIRTUAL_RACK_WIDTH = 150;
-	private final int VIRTUAL_RACK_HEIGHT = 150;
+	private final int VIRTUAL_RACK_WIDTH = 175;
+	private final int VIRTUAL_RACK_HEIGHT = 175;
 	
 	// makes the turn selector appear on top of the player's column for mac osx
 	private final int XFUDGE = 4;
@@ -121,7 +123,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		gridBagLayout = new GridBagLayout();
 		gridConstraints = new GridBagConstraints();
 		layeredPane.setLayout(gridBagLayout);
-		layeredPane.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+		layeredPane.setSize(PANEL_WIDTH*2, PANEL_HEIGHT*2);
 		
 		rackScore = new JLabel("Rack Score:", JLabel.RIGHT);
 		rackDetails = new JLabel("Rack Details:", JLabel.RIGHT);
@@ -133,8 +135,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		p2IDF = new JTextField(p2Name, ncols);
 		p1RackScoreF = new JTextField("0", 3);
 		p2RackScoreF = new JTextField("0", 3);
-		p1RackDetails = new JPanel();
-		p2RackDetails = new JPanel();
+		p1RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT);
+		p2RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH, VIRTUAL_RACK_HEIGHT);
 		p1TotalScoreF = new JTextField("0", 3);
 		p2TotalScoreF = new JTextField("0", 3);		
 		p1GoalF = new JTextField(Integer.toString(p1WinsAt), 3);
@@ -313,6 +315,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		statsButton = new JButton ("Player Statistics");
 		editButton = new JButton ("Edit Score");
 		replayButton = new JButton ("Shot Replay");
+		doneButton = new JButton ("Done");
 		
 		quitButton.addActionListener(this);
 		statsButton.addActionListener(this);
@@ -396,8 +399,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) { 
-		//System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
-		if (rect2d.contains(e.getX(), e.getY()) || p.contains(e.getX(), e.getY())) {
+		if ((rect2d.contains(e.getX(), e.getY()) || p.contains(e.getX(), e.getY())) && showSelector) {
 			System.out.println("Clicked on the turn selector");	
 			runner = new Thread(this);
 			runner.start();
@@ -417,18 +419,44 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
     public void ballSunk(int ball) {
     	if (p1selected) {
-    		p1RackScore++;
-    		p1RackScoreF.setText(Integer.toString(p1RackScore));
-    		p1TotalScore++;
-    		p1TotalScoreF.setText(Integer.toString(p1RackScore));
-    		repaint();
+    		if (!virtualRack.ballAlreadySunk(ball)) {
+    			p1RackScore++;
+    			p1RackScoreF.setText(Integer.toString(p1RackScore));
+    			p1TotalScore++;
+    			p1TotalScoreF.setText(Integer.toString(p1RackScore));
+    			
+    			virtualRack.removeBall(ball);
+    			BufferedImage img = virtualRack.getBallImg(ball);    		
+    			p1RackDetails.addBall(img, ball);    		
+    			repaint();
+    		}
     	} else {
-    		p2RackScore++;
-    		p2RackScoreF.setText(Integer.toString(p2RackScore));
-    		p2TotalScore++;
-    		p2TotalScoreF.setText(Integer.toString(p2TotalScore));
-    		repaint();
+    		if (!virtualRack.ballAlreadySunk(ball)) {
+    			p2RackScore++;
+    			p2RackScoreF.setText(Integer.toString(p2RackScore));
+    			p2TotalScore++;
+    			p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+    			
+    			virtualRack.removeBall(ball);
+    			BufferedImage img = virtualRack.getBallImg(ball);    		
+    			p2RackDetails.addBall(img, ball);      		
+    			repaint();
+    		}
     	}
+    }
+    
+    public void clearRack() {
+    	p1RackDetails.clearBalls();
+    	p2RackDetails.clearBalls();
+    	virtualRack.newRack();
+    	
+    	p1RackScore = 0;
+		p1RackScoreF.setText(Integer.toString(p1RackScore));
+
+    	p2RackScore = 0;
+		p2RackScoreF.setText(Integer.toString(p2RackScore));
+		repaint();
+
     }
 
 	public void run() {
@@ -462,8 +490,20 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "quit") {
-			//TODO prompt the user
-			System.out.println("quit button pressed");
+			
+			Object[] options = {"No", "Yes"};			
+			int n = JOptionPane.showOptionDialog(this,
+					"Quit the current game? All game statistics and scores will be lost.",
+					"Quit",					
+				    JOptionPane.YES_NO_CANCEL_OPTION,
+				    JOptionPane.QUESTION_MESSAGE,
+				    null,
+				    options,
+				    options[1]);		
+			if (n == 1) { // really quit the game
+				//TODO this should cause the system to display the login/setup menu system
+				setVisible(false);
+			}
 		} else if (e.getActionCommand() == "replay") {
 			
 		} else if (e.getActionCommand() == "stats") {
@@ -488,6 +528,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     }
 
     private void editScore() {
+    	System.out.println("edit score called");
     	showSelector = false;
     	repaint();
     	
@@ -497,9 +538,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	p2TotalScoreF.setEditable(true);
     	p1GoalF.setEditable(true);
     	p2GoalF.setEditable(true);
-    	
-    	JButton doneButton = new JButton("Done");
-    	
+    	    	
     	replayButton.setEnabled(false);
     	statsButton.setEnabled(false);
     	
@@ -515,25 +554,23 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     			p2RackScore = Integer.parseInt(p2RackScoreF.getText());
     			p1TotalScore = Integer.parseInt(p1TotalScoreF.getText());
     			p2TotalScore = Integer.parseInt(p2TotalScoreF.getText());
+    	    	showSelector = true;
+    	    	repaint();    	    	
+    	    	p1RackScoreF.setEditable(false);
+    	    	p2RackScoreF.setEditable(false);
+    	    	p1TotalScoreF.setEditable(false);
+    	    	p2TotalScoreF.setEditable(false);
+    	    	p1GoalF.setEditable(false);
+    	    	p2GoalF.setEditable(false);    	    	
+    	    	replayButton.setEnabled(true);
+    	    	statsButton.setEnabled(true);    	    	
+    	    	buttonPanel.remove(doneButton);
+    	    	buttonPanel.add(editButton, 2);
+    	    	buttonPanel.validate();
+    			
     		}
     	});
     	
-    	showSelector = true;
-    	repaint();
-    	
-    	p1RackScoreF.setEditable(false);
-    	p2RackScoreF.setEditable(false);
-    	p1TotalScoreF.setEditable(false);
-    	p2TotalScoreF.setEditable(false);
-    	p1GoalF.setEditable(false);
-    	p2GoalF.setEditable(false);
-    	
-    	replayButton.setEnabled(true);
-    	statsButton.setEnabled(true);
-    	
-    	buttonPanel.remove(doneButton);
-    	buttonPanel.add(editButton, 2);
-    	buttonPanel.validate();
 
     	
     }

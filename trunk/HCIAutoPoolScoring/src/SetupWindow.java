@@ -17,7 +17,6 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 	private JLabel player2lbl = null;
 	private JTextField player1name = null;
 	private JTextField player2name = null;
-	private JButton quitButton = null;
 	private JButton continueButton = null;
 	
 	
@@ -70,23 +69,12 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		gridConstraints.fill = GridBagConstraints.CENTER;
 		gridConstraints.weighty = 1.0;   //request any extra vertical space
 		gridConstraints.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		layeredPane.add(quitButton = new JButton("Quit"), gridConstraints);
-		clearGridConstraints(gridConstraints);
-		
-		gridConstraints.gridy = 4;
-		gridConstraints.gridx = 3;
-		gridConstraints.fill = GridBagConstraints.CENTER;
-		//gridConstraints.weighty = 1.0;   //request any extra vertical space
-		//gridConstraints.weightx = 1.0;
-		gridConstraints.anchor = GridBagConstraints.PAGE_END; //bottom of space
 		layeredPane.add(continueButton = new JButton("Continue"), gridConstraints);
 		clearGridConstraints(gridConstraints);
 		
-		
-		quitButton.addActionListener(this);
+
 		continueButton.addActionListener(this);
 		
-		quitButton.setActionCommand("quit");
 		continueButton.setActionCommand("continue");
 		
 		addMouseListener(this);

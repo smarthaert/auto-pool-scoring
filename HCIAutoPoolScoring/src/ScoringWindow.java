@@ -461,7 +461,18 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     }
 
     public void processFault() {
-    
+    	if (p1selected) {
+    		p1RackScore -= 2;
+    		p1TotalScore -= 2;
+    		p1RackScoreF.setText(Integer.toString(p1RackScore));
+    		p1TotalScoreF.setText(Integer.toString(p1TotalScore));
+    		
+    	} else {
+    		p2RackScore -= 2;
+    		p2TotalScore -= 2;
+    		p2RackScoreF.setText(Integer.toString(p2RackScore));
+    		p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+    	}
     }
     
     public void ballMissed() {
@@ -542,8 +553,11 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	showSelector = false;
     	repaint();
     	
+    	/*
     	p1RackScoreF.setEditable(true);
     	p2RackScoreF.setEditable(true);
+    	*/
+    	
     	p1TotalScoreF.setEditable(true);
     	p2TotalScoreF.setEditable(true);
     	p1GoalF.setEditable(true);
@@ -560,14 +574,68 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	
     	doneButton.addActionListener(new ActionListener () {
     		public void actionPerformed(ActionEvent e) {
-    			p1RackScore = Integer.parseInt(p1RackScoreF.getText());
-    			p2RackScore = Integer.parseInt(p2RackScoreF.getText());
-    			p1TotalScore = Integer.parseInt(p1TotalScoreF.getText());
-    			p2TotalScore = Integer.parseInt(p2TotalScoreF.getText());
+    			
+    			/*
+    			if (isValidNumber(p1RackScoreF.getText())) {
+    				p1RackScore = Integer.parseInt(p1RackScoreF.getText());
+    			} else {
+    				p1RackScoreF.setText(Integer.toString(p1RackScore));
+    				JOptionPane.showMessageDialog(null, "Error, " + p1Name + "'s rack score is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+    			}
+    			
+    			if (isValidNumber(p2RackScoreF.getText())) {
+    				p2RackScore = Integer.parseInt(p2RackScoreF.getText());
+    			} else {
+    				p2RackScoreF.setText(Integer.toString(p2RackScore));
+    				JOptionPane.showMessageDialog(null, "Error, " + p2Name + "'s rack score is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+    			}
+    			*/
+    			
+    			if (isValidNumber(p1TotalScoreF.getText())) {
+        			p1TotalScore = Integer.parseInt(p1TotalScoreF.getText());
+    			} else {
+    				p1TotalScoreF.setText(Integer.toString(p1TotalScore));
+    				JOptionPane.showMessageDialog(null, "Error, " + p1Name + "'s total score is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+
+    			}
+    			
+    			if (isValidNumber(p2TotalScoreF.getText())) {
+    				p2TotalScore = Integer.parseInt(p2TotalScoreF.getText());
+    			} else {
+    				p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+    				JOptionPane.showMessageDialog(null, "Error, " + p2Name + "'s total score is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+
+    			}
+    			
+    			if (isValidNumber(p1GoalF.getText())) {
+    				p1WinsAt = Integer.parseInt(p1GoalF.getText());
+    			} else {
+    				p1GoalF.setText(Integer.toString(p1WinsAt));
+    				JOptionPane.showMessageDialog(null, "Error, " + p1Name + "'s goal is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+    			}
+
+    			if (isValidNumber(p2GoalF.getText())) {
+    				p2WinsAt = Integer.parseInt(p2GoalF.getText());
+    			} else {
+    				p2GoalF.setText(Integer.toString(p2WinsAt));
+    				JOptionPane.showMessageDialog(null, "Error, " + p2Name + "'s goal is not a valid number.",
+    						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+    			}
+
+    			
+    			
     	    	showSelector = true;
-    	    	repaint();    	    	
+    	    	repaint();  
+    	    	/*
     	    	p1RackScoreF.setEditable(false);
     	    	p2RackScoreF.setEditable(false);
+    	    	*/
+    	    	
     	    	p1TotalScoreF.setEditable(false);
     	    	p2TotalScoreF.setEditable(false);
     	    	p1GoalF.setEditable(false);
@@ -579,11 +647,17 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	    	buttonPanel.validate();
     			
     		}
-    	});
-    	
-
-    	
+    	});    	
     }
     
-
+    public boolean isValidNumber( String s ) {
+    	boolean isNumber = false;
+    	
+    	try {
+    		Integer.parseInt(s);
+    		return true;
+    	} catch (NumberFormatException e) {
+    		return false;
+    	}    	
+    }
 }

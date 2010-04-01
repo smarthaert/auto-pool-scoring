@@ -36,9 +36,9 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JTextField p1GoalF = null;
 	private JTextField p2GoalF = null;	
 	
-	private PlayerRackPanel p1RackDetails = null;
-	private PlayerRackPanel p2RackDetails = null;
-	private VirtualRackPanel virtualRack = null;
+	protected PlayerRackPanel p1RackDetails = null;
+	protected PlayerRackPanel p2RackDetails = null;
+	protected VirtualRackPanel virtualRack = null;
 	
 	private JSeparator horiz1 = null;
 	private JSeparator horiz2 = null;
@@ -60,10 +60,10 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
 	private JLayeredPane layeredPane = null;
 	
-	private final int PANEL_WIDTH = 1024;
-	private final int PANEL_HEIGHT = 768;
-	private final int VIRTUAL_RACK_WIDTH = 125;
-	private final int VIRTUAL_RACK_HEIGHT = 125;
+	protected final int PANEL_WIDTH = 1024;
+	protected final int PANEL_HEIGHT = 768;
+	protected final int VIRTUAL_RACK_WIDTH = 125;
+	protected final int VIRTUAL_RACK_HEIGHT = 125;
 	
 	// makes the turn selector appear on top of the player's column for mac osx
 	private final int XFUDGE = 4;

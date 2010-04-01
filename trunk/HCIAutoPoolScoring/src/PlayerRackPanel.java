@@ -50,7 +50,7 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		
-		final int PADDING = 10;		
+		final int PADDING = 5;		
 		
 		int x,y;
 		for (int i = 0; i < ball_images.size(); i++) {

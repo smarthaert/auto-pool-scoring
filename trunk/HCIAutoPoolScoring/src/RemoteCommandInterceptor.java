@@ -38,7 +38,7 @@ public class RemoteCommandInterceptor implements Runnable {
 				} else if (cmd == 16) { // miss
 					window.animateTurnSelector();
 				} else if (cmd == 17) { // fault
-					
+					window.processFault();
 				} else if (cmd == 18) { // new rack return all balls to the rightmost pane and clear rack totals
 					window.clearRack();
 				}

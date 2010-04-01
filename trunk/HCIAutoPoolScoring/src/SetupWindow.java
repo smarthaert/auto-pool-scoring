@@ -138,6 +138,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 			AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText();
 			AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText());
 			
+			AutoPoolScorer.mainWindow.scoreWindow.clearRack();
 			
 			AutoPoolScorer.mainWindow.goScore();
 			

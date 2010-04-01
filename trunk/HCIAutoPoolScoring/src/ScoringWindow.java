@@ -502,7 +502,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 				    options[1]);		
 			if (n == 1) { // really quit the game
 				//TODO this should cause the system to display the login/setup menu system
-				setVisible(false);
+				AutoPoolScorer.mainWindow.goSetup();
+				
 			}
 		} else if (e.getActionCommand() == "replay") {
 			
@@ -528,7 +529,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     }
 
     private void editScore() {
-    	System.out.println("edit score called");
+    	//System.out.println("edit score called");
     	showSelector = false;
     	repaint();
     	

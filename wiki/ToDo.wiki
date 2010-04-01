@@ -1,7 +1,5 @@
 #summary A list of unfinished features
 
-= To-Do =
-
 Player Score Editing
   * ball _dragging_
 *Video* integration

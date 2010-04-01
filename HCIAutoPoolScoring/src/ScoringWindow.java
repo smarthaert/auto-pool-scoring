@@ -19,6 +19,21 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private int p1WinsAt = 250;
 	private int p2WinsAt = 250;
 	
+	public int sunkp1 = 0;
+	public int sunkp2 = 0;
+	public int missp1 = 0;
+	public int missp2 = 0;
+	public int faultp1 = 0;
+	public int faultp2 = 0;
+	public float avgrunp1 = 0;
+	public float avgrunp2 = 0;
+	public int maxrunp1 = 0;
+	public int maxrunp2 = 0;
+	public int currunp1 = 0;
+	public int currunp2 = 0;
+	public int nbrunp1 = 0;
+	public int nbrunp2 = 0;
+	
 	private GridBagLayout gridBagLayout = null;
 	private GridBagConstraints gridConstraints = null;
 
@@ -413,7 +428,29 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 
 	public void mouseReleased(MouseEvent e) { }
 	
-	public void animateTurnSelector() { 
+	public void animateTurnSelector() {
+		if (p1selected)
+		{
+			missp1++;
+			if(maxrunp1<currunp1)
+			{
+				maxrunp1 = currunp1;
+			}
+			nbrunp1++;
+			avgrunp1 = sunkp1/nbrunp1;
+			currunp1 = 0;		
+		}
+		else
+		{
+			missp2++;
+			if(maxrunp2<currunp2)
+			{
+				maxrunp2 = currunp2;
+			}
+			nbrunp2++;
+			avgrunp2 = sunkp1/nbrunp2;
+			currunp2 = 0;
+		}
 		runner = new Thread(this);
 		runner.start();
 	}
@@ -423,6 +460,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     		if (!virtualRack.ballAlreadySunk(ball)) {
     			//p1RackScore++;
     			//p1RackScoreF.setText(Integer.toString(p1RackScore));
+    			sunkp1++;
+    			currunp1++;
     			p1TotalScore++;
     			p1TotalScoreF.setText(Integer.toString(p1RackScore));
     			
@@ -435,6 +474,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     		if (!virtualRack.ballAlreadySunk(ball)) {
     			//p2RackScore++;
     			//p2RackScoreF.setText(Integer.toString(p2RackScore));
+    			sunkp2++;
+    			currunp2++;
     			p2TotalScore++;
     			p2TotalScoreF.setText(Integer.toString(p2TotalScore));
     			
@@ -462,12 +503,28 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 
     public void processFault() {
     	if (p1selected) {
+    		faultp1++;
+			if(maxrunp1<currunp1)
+			{
+				maxrunp1 = currunp1;
+			}
+			currunp1 = 0;
+			nbrunp1++;
+			avgrunp1 = sunkp1/nbrunp1;
     		p1RackScore -= 2;
     		p1TotalScore -= 2;
     		p1RackScoreF.setText(Integer.toString(p1RackScore));
     		p1TotalScoreF.setText(Integer.toString(p1TotalScore));
     		
     	} else {
+    		faultp2++;
+			if(maxrunp2<currunp2)
+			{
+				maxrunp2 = currunp2;
+			}
+			nbrunp2++;
+			currunp2 = 0;
+			avgrunp2 = sunkp1/nbrunp2;
     		p2RackScore -= 2;
     		p2TotalScore -= 2;
     		p2RackScoreF.setText(Integer.toString(p2RackScore));
@@ -522,6 +579,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 				    options[1]);		
 			if (n == 1) { // really quit the game
 				//TODO this should cause the system to display the login/setup menu system
+				resetStats();
 				AutoPoolScorer.mainWindow.goSetup();
 				
 			}
@@ -529,11 +587,27 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 			
 		} else if (e.getActionCommand() == "stats") {
 			
+			new StatsWindow();
+			
 		} else if (e.getActionCommand() == "edit") {
 			editScore();
 		}
 	}
 	
+	private void resetStats() {
+		
+		sunkp1 = 0;
+		sunkp2 = 0;
+		missp1 = 0;
+		missp2 = 0;
+		faultp1 = 0;
+		faultp2 = 0;
+		avgrunp1 = 0;
+		avgrunp2 = 0;
+		maxrunp1 = 0;
+		maxrunp2 = 0;
+	}
+
 	public void componentHidden(ComponentEvent e) { }
     public void componentShown(ComponentEvent e) { }
     public void componentMoved(ComponentEvent e) { }

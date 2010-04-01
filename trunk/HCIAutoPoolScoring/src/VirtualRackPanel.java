@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
 
-public class VirtualRackPanel extends JPanel implements MouseListener {
+public class VirtualRackPanel extends JPanel implements MouseListener, MouseMotionListener {
 
 	private JPanel panel = null;
 
@@ -19,7 +19,11 @@ public class VirtualRackPanel extends JPanel implements MouseListener {
 
 	private boolean [] ball_displayed;
 	private BufferedImage[] ball_images;
-	private Point[] ball_points;	
+	private Point[] ball_points;
+	
+	private int ballDragging = 0;
+	private int dragX=0;
+	private int dragY=0;
 
 	public VirtualRackPanel(int width, int height) {
 		panel_width = width;
@@ -39,6 +43,7 @@ public class VirtualRackPanel extends JPanel implements MouseListener {
 		setDoubleBuffered(true);
 		setPreferredSize(new Dimension(panel_width, panel_height));
 		addMouseListener(this);
+		addMouseMotionListener(this);
 		
 		loadBalls();
 	}
@@ -173,21 +178,82 @@ public class VirtualRackPanel extends JPanel implements MouseListener {
 		for (int i = 1; i <= 15; i++) {
 			if (ball_points[i] != null && ball_displayed[i]) {
 				Point p = ball_points[i];
-				g.drawImage(ball_images[i], p.x, p.y, p.x + SCALED_DIMENSIONS, p.y + SCALED_DIMENSIONS, 
-						0, 0, ball_width, ball_height, null);	
+				if(ballDragging == i){
+					// draw later
+				}else{
+					g.drawImage(ball_images[i], p.x, p.y, p.x + SCALED_DIMENSIONS, p.y + SCALED_DIMENSIONS, 
+							0, 0, ball_width, ball_height, null);
+				}
 			}
+		}
+		
+		if(ballDragging > 0){
+			Point p = ball_points[ballDragging];
+			System.out.println("dragging " + ballDragging);
+			p.x = dragX-SCALED_DIMENSIONS/2;
+			p.y = dragY-SCALED_DIMENSIONS/2;
+			g.drawImage(ball_images[ballDragging], p.x, p.y, p.x + SCALED_DIMENSIONS, p.y + SCALED_DIMENSIONS, 
+					0, 0, ball_width, ball_height, null);
 		}
 	}
 	
+	public void mouseClicked(MouseEvent e) { }
+	
+	@Override
 	public void mousePressed(MouseEvent e) {
+		System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
+		
+		int selected = ballAt(e.getX(), e.getY());
+		if(selected>0){
+			System.out.println("selected: " + selected);
+			ballDragging = selected;
+			repaint();
+			dragX = e.getX();
+			dragY = e.getY();
+		}
+		
 	}
 	
-	public void mouseClicked(MouseEvent e) {
+	private int ballAt(int x, int y){
+		
+		for (int i = 1; i <= 15; i++) {
+			int xDif = x-(ball_points[i].x+SCALED_DIMENSIONS/2);
+			int yDif = y-(ball_points[i].y+SCALED_DIMENSIONS/2);
+			
+			double dist = Math.sqrt(xDif*xDif + yDif*yDif);
+			if(dist < SCALED_DIMENSIONS/2){
+				return i;
+			}
+		}
+		
+		return 0;
+	}
+	
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
+		
+		ballDragging = 0;
+		repaint();
 	}
 	
 	public void mouseEntered(MouseEvent e) { }
 	
 	public void mouseExited(MouseEvent e) { }
 
-	public void mouseReleased(MouseEvent e) { }	
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("mouseDragged (" + e.getX() + "," + e.getY() + ")");
+		dragX = e.getX();
+		dragY = e.getY();
+		repaint();
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		//System.out.println("mouseMoved (" + e.getX() + "," + e.getY() + ")");
+	}
 }

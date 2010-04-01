@@ -245,7 +245,7 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("mouseDragged (" + e.getX() + "," + e.getY() + ")");
+		System.out.println("virRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
 		dragX = e.getX();
 		dragY = e.getY();
 		repaint();
@@ -254,6 +254,6 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		//System.out.println("mouseMoved (" + e.getX() + "," + e.getY() + ")");
+		System.out.println("virRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}
 }

@@ -8,8 +8,8 @@ import java.awt.event.*;
 public class ScoringWindow extends JPanel 
 implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
-	private String p1Name = null;
-	private String p2Name = null;
+	protected String p1Name = null;
+	protected String p2Name = null;
 	
 	public int p1RackScore = 0;
 	public int p2RackScore = 0;
@@ -27,8 +27,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JLabel totalScore = null;
 	private JLabel gameGoal = null;
 	
-	private JTextField p1IDF = null;
-	private JTextField p2IDF = null;
+	protected JTextField p1IDF = null;
+	protected JTextField p2IDF = null;
 	private JTextField p1RackScoreF = null;
 	private JTextField p2RackScoreF = null;		
 	private JTextField p1TotalScoreF = null;

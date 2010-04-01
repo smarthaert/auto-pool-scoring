@@ -52,7 +52,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JSeparator vert4 = null;
 
 	private JPanel buttonPanel = null;
-	private JButton quitButton = null;
+	private JButton restartButton = null;
 	private JButton editButton = null;
 	private JButton statsButton = null;
 	private JButton replayButton = null;
@@ -62,8 +62,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	
 	private final int PANEL_WIDTH = 1024;
 	private final int PANEL_HEIGHT = 768;
-	private final int VIRTUAL_RACK_WIDTH = 175;
-	private final int VIRTUAL_RACK_HEIGHT = 175;
+	private final int VIRTUAL_RACK_WIDTH = 125;
+	private final int VIRTUAL_RACK_HEIGHT = 125;
 	
 	// makes the turn selector appear on top of the player's column for mac osx
 	private final int XFUDGE = 4;
@@ -311,23 +311,23 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		add(layeredPane, BorderLayout.CENTER);		
 		
 		buttonPanel = new JPanel();
-		quitButton = new JButton ("Quit");
+		restartButton = new JButton ("Restart");
 		statsButton = new JButton ("Player Statistics");
 		editButton = new JButton ("Edit Score");
 		replayButton = new JButton ("Shot Replay");
 		doneButton = new JButton ("Done");
 		
-		quitButton.addActionListener(this);
+		restartButton.addActionListener(this);
 		statsButton.addActionListener(this);
 		editButton.addActionListener(this);
 		replayButton.addActionListener(this);
 				
-		quitButton.setActionCommand("quit");
+		restartButton.setActionCommand("restart");
 		statsButton.setActionCommand("stats");
 		editButton.setActionCommand("edit");
 		replayButton.setActionCommand("replay");
 		
-		buttonPanel.add(quitButton);
+		buttonPanel.add(restartButton);
 		buttonPanel.add(statsButton);
 		buttonPanel.add(editButton);
 		buttonPanel.add(replayButton);
@@ -399,7 +399,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) { 
-		if ((rect2d.contains(e.getX(), e.getY()) || p.contains(e.getX(), e.getY())) && showSelector) {
+		Rectangle2D.Float rect = new Rectangle2D.Float(vert1.getX(), vert1.getY(), vert3.getX()-vert1.getX(), vert1.getHeight());
+		if ((rect.contains(e.getX(), e.getY()) || p.contains(e.getX(), e.getY())) && showSelector) {
 			System.out.println("Clicked on the turn selector");	
 			runner = new Thread(this);
 			runner.start();
@@ -459,6 +460,14 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 
     }
 
+    public void processFault() {
+    
+    }
+    
+    public void ballMissed() {
+    	
+    }
+    
 	public void run() {
 		Thread thisThread = Thread.currentThread();
 	
@@ -489,7 +498,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "quit") {
+		if (e.getActionCommand() == "restart") {
 			
 			Object[] options = {"No", "Yes"};			
 			int n = JOptionPane.showOptionDialog(this,

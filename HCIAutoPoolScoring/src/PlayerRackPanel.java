@@ -1,10 +1,18 @@
 import javax.swing.*;
 import javax.swing.event.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.*;
 import java.awt.*;
 import java.util.*;
 
-public class PlayerRackPanel extends JPanel {
+public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotionListener{
 	
 	private int panel_width;
 	private int panel_height;
@@ -22,6 +30,9 @@ public class PlayerRackPanel extends JPanel {
 		setPreferredSize(new Dimension(panel_width, panel_height));
 		ball_images = new Vector();
 		ball_numbers = new Vector();
+		
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 	
 	public void addBall( BufferedImage image, int i ) {
@@ -50,5 +61,45 @@ public class PlayerRackPanel extends JPanel {
 			g.drawImage(img, x, y, x + SCALED_DIMENSIONS, y + SCALED_DIMENSIONS,
 					0, 0, img.getWidth(), img.getHeight(), null);												
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("plrRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("plrRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}	
 }

@@ -234,24 +234,26 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
 		
-		if(dragY >= 0 && dragY <= getHeight() && dragX<0){
-			int dropPanel = -dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
-			if(dropPanel == 0){
-				//plr 2 panel
-				AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.addBall(getBallImg(ballDragging), ballDragging);
-				removeBall(ballDragging);
-			}else if(dropPanel == 1){
-				// plr 1 panel
-				AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.addBall(getBallImg(ballDragging), ballDragging);
-				removeBall(ballDragging);
+		if(ballDragging>0){
+			if(dragY >= 0 && dragY <= getHeight() && dragX<0){
+				int dropPanel = -dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
+				if(dropPanel == 0){
+					//plr 2 panel
+					AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.addBall(getBallImg(ballDragging), ballDragging);
+					removeBall(ballDragging);
+				}else if(dropPanel == 1){
+					// plr 1 panel
+					AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.addBall(getBallImg(ballDragging), ballDragging);
+					removeBall(ballDragging);
+				}
 			}
+			
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = 0;
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = 0;
+			
+			ballDragging = 0;
+			AutoPoolScorer.mainWindow.scoreWindow.repaint();
 		}
-		
-		AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = 0;
-		AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = 0;
-		
-		ballDragging = 0;
-		AutoPoolScorer.mainWindow.scoreWindow.repaint();
 	}
 	
 	public void mouseEntered(MouseEvent e) {
@@ -270,15 +272,17 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 		dragY = e.getY();
 		//repaint();
 		
-		AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = ballDragging;
-		AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.dragX = dragX + 2*(AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
-		AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.dragY = dragY;
-		
-		AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = ballDragging;
-		AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.dragX = dragX + 1*(AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
-		AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.dragY = dragY;
-		
-		AutoPoolScorer.mainWindow.scoreWindow.repaint();
+		if(ballDragging>0){
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.ballDragging = ballDragging;
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.dragX = dragX + 2*(AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
+			AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.dragY = dragY;
+			
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.ballDragging = ballDragging;
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.dragX = dragX + 1*(AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
+			AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.dragY = dragY;
+			
+			AutoPoolScorer.mainWindow.scoreWindow.repaint();
+		}
 		
 	}
 

@@ -131,15 +131,30 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "continue") {
-			System.out.println("continue");
-			AutoPoolScorer.mainWindow.scoreWindow.p1Name = this.player1name.getText();
-			AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText(this.player1name.getText());
+			System.out.println("continue");			
 			
-			AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText();
-			AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText());
+			if (!player1name.getText().isEmpty()) {
+				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText(this.player1name.getText());
+				AutoPoolScorer.mainWindow.scoreWindow.p1Name = this.player1name.getText();
+			} else {
+				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText("Player1");
+				AutoPoolScorer.mainWindow.scoreWindow.p1Name = "Player1";
+			}
+			
+			if (!player2name.getText().isEmpty()) {
+				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText());
+				AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText();
+
+			} else {
+				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText("Player2");
+				AutoPoolScorer.mainWindow.scoreWindow.p1Name = "Player2";
+			}
+			
+			System.out.println("p1IDF" + AutoPoolScorer.mainWindow.scoreWindow.p1IDF.getText());
+			System.out.println("p2IDF" + AutoPoolScorer.mainWindow.scoreWindow.p2IDF.getText());
+
 			
 			AutoPoolScorer.mainWindow.scoreWindow.clearRack();
-			
 			AutoPoolScorer.mainWindow.goScore();
 			
 			this.player1name.setText("");

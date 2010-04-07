@@ -605,8 +605,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		p2RackScore = 0;
 		p1WinsAt = 250;
 		p2WinsAt = 250;
-		p1Name = "";
-		p2Name = "";
+		p1Name = "Player1";
+		p2Name = "Player2";
 		
 		p1TotalScoreF.setText(Integer.toString(p1TotalScore));
 		p2TotalScoreF.setText(Integer.toString(p2TotalScore));
@@ -631,7 +631,15 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	}
 
 	public void componentHidden(ComponentEvent e) { }
-    public void componentShown(ComponentEvent e) { }
+    public void componentShown(ComponentEvent e) { 
+    	if (p1selected) {
+    		selector_x = vert1.getX() + XFUDGE;
+    		selector_y = vert1.getY() + YFUDGE;
+    	} else { //p2 selected
+    		selector_x = vert2.getX() + XFUDGE;
+    		selector_y = vert2.getY() + YFUDGE;
+    	}
+    }
     public void componentMoved(ComponentEvent e) { }
 
     public void componentResized(ComponentEvent e) {

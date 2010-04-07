@@ -147,7 +147,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 
 			} else {
 				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText("Player2");
-				AutoPoolScorer.mainWindow.scoreWindow.p1Name = "Player2";
+				AutoPoolScorer.mainWindow.scoreWindow.p2Name = "Player2";
 			}
 			
 			System.out.println("p1IDF" + AutoPoolScorer.mainWindow.scoreWindow.p1IDF.getText());

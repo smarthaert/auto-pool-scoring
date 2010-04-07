@@ -46,8 +46,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	protected JTextField p2IDF = null;
 	protected JTextField p1RackScoreF = null;
 	protected JTextField p2RackScoreF = null;		
-	private JTextField p1TotalScoreF = null;
-	private JTextField p2TotalScoreF = null;	
+	protected JTextField p1TotalScoreF = null;
+	protected JTextField p2TotalScoreF = null;	
 	private JTextField p1GoalF = null;
 	private JTextField p2GoalF = null;	
 	
@@ -462,8 +462,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     			//p1RackScoreF.setText(Integer.toString(p1RackScore));
     			sunkp1++;
     			currunp1++;
-    			p1TotalScore++;
-    			p1TotalScoreF.setText(Integer.toString(p1RackScore));
+    			//p1TotalScore++;
+    			//p1TotalScoreF.setText(Integer.toString(p1RackScore));
     			
     			virtualRack.removeBall(ball);
     			BufferedImage img = virtualRack.getBallImg(ball);    		
@@ -476,8 +476,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     			//p2RackScoreF.setText(Integer.toString(p2RackScore));
     			sunkp2++;
     			currunp2++;
-    			p2TotalScore++;
-    			p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+    			//p2TotalScore++;
+    			//p2TotalScoreF.setText(Integer.toString(p2TotalScore));
     			
     			virtualRack.removeBall(ball);
     			BufferedImage img = virtualRack.getBallImg(ball);    		
@@ -530,6 +530,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     		p2RackScoreF.setText(Integer.toString(p2RackScore));
     		p2TotalScoreF.setText(Integer.toString(p2TotalScore));
     	}
+    	animateTurnSelector();
     }
     
     public void ballMissed() {
@@ -580,6 +581,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 			if (n == 1) { // really quit the game
 				//TODO this should cause the system to display the login/setup menu system
 				resetStats();
+				resetScores();
 				AutoPoolScorer.mainWindow.goSetup();
 				
 			}
@@ -592,6 +594,26 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		} else if (e.getActionCommand() == "edit") {
 			editScore();
 		}
+	}
+	
+	private void resetScores() {
+		p1TotalScore = 0;
+		p2TotalScore = 0;
+		p1RackDetails.clearBalls();
+		p2RackDetails.clearBalls();
+		p1RackScore = 0;
+		p2RackScore = 0;
+		p1WinsAt = 250;
+		p2WinsAt = 250;
+		p1Name = "";
+		p2Name = "";
+		
+		p1TotalScoreF.setText(Integer.toString(p1TotalScore));
+		p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+		p1RackScoreF.setText(Integer.toString(p1RackScore));
+		p2RackScoreF.setText(Integer.toString(p2RackScore));
+		p1GoalF.setText(Integer.toString(p1WinsAt));
+		p2GoalF.setText(Integer.toString(p2WinsAt));
 	}
 	
 	private void resetStats() {

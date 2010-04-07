@@ -21,9 +21,9 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	private BufferedImage[] ball_images;
 	private Point[] ball_points;
 	
-	private int ballDragging = 0;
-	private int dragX=0;
-	private int dragY=0;
+	protected int ballDragging = 0;
+	protected int dragX=0;
+	protected int dragY=0;
 
 	public VirtualRackPanel(int width, int height) {
 		panel_width = width;
@@ -158,6 +158,14 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 			System.out.println("Balls must be between 1-15");
 		}
 		ball_displayed[i] = false;
+		repaint();
+	}
+	
+	public void addBall(int i) {
+		if (i > 15 || i < 1) {
+			System.out.println("Balls must be between 1-15");
+		}
+		ball_displayed[i] = true;
 		repaint();
 	}
 	

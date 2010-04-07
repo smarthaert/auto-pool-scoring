@@ -39,13 +39,15 @@ public class MainWindow extends JFrame {
 		f.remove(setupWindow);
 		f.add(scoreWindow, BorderLayout.CENTER);
 		f.pack();		
+		AutoPoolScorer.mainWindow.scoreWindow.cap.start();
 		f.setVisible(true);
 	}
 	
 	public void goSetup(){
 		f.remove(scoreWindow);
 		f.add(setupWindow, BorderLayout.CENTER);
-		f.pack();		
+		f.pack();
+		scoreWindow.cap.stop();
 		f.setVisible(true);
 	}
 	

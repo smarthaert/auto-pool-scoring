@@ -93,41 +93,41 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("plrRack enter");
+		//System.out.println("plrRack enter");
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("virRack exit");
+		//System.out.println("virRack exit");
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("plrRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("plrRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("plrRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("plrRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}	
 }

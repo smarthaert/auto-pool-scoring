@@ -34,6 +34,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	public int nbrunp1 = 0;
 	public int nbrunp2 = 0;
 	
+	public SwingCapture cap = null;
+	
 	private GridBagLayout gridBagLayout = null;
 	private GridBagConstraints gridConstraints = null;
 
@@ -110,6 +112,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	//TODO add a default font
 	
 	public ScoringWindow() {
+		cap = new SwingCapture();
 		this.p1Name = "Player1";
 		this.p2Name = "Player2";
 		createAndShowGUI();
@@ -429,6 +432,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	public void mouseReleased(MouseEvent e) { }
 	
 	public void animateTurnSelector() {
+    	cap.stop();
+    	cap.start();
 		if (p1selected)
 		{
 			missp1++;
@@ -456,6 +461,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	}
 	
     public void ballSunk(int ball) {
+    	cap.stop();
+    	cap.start();
     	if (p1selected) {
     		if (!virtualRack.ballAlreadySunk(ball)) {
     			//p1RackScore++;
@@ -502,6 +509,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     }
 
     public void processFault() {
+    	cap.stop();
+    	cap.start();
     	if (p1selected) {
     		faultp1++;
 			if(maxrunp1<currunp1)
@@ -584,6 +593,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 				
 			}
 		} else if (e.getActionCommand() == "replay") {
+			cap.stop();
+			new ReplayWindow();
 			
 		} else if (e.getActionCommand() == "stats") {
 			

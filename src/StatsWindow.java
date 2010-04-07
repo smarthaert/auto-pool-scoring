@@ -12,16 +12,12 @@ public class StatsWindow extends JDialog
 	
 	
 	public StatsWindow(){
-		setTitle("About Notes");
+		setTitle("Stats");
 
-		JLayeredPane layeredPane = new JLayeredPane();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		GridBagConstraints gridConstraints = new GridBagConstraints();
 		setLayout(gridBagLayout);
 		
-		JSeparator horiz1 = new JSeparator(JSeparator.HORIZONTAL);
-
-
 		gridConstraints.weightx = 1;
 		gridConstraints.gridy = 0;
 		gridConstraints.gridx = 2;

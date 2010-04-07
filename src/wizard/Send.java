@@ -14,7 +14,8 @@ class Send
 	   //InetAddress IPAddress = InetAddress.getByName("localhost");
 
 	   //byte[] inetAddr = { 128, 61, 24, 154 };
-	   InetAddress IPAddress = InetAddress.getByName(args[0]);
+	   //InetAddress IPAddress = InetAddress.getByName(args[0]);
+	   InetAddress IPAddress = InetAddress.getByName("127.0.0.1");
 
 	   byte[] sendData = new byte[1024];
 	   byte[] receiveData = new byte[1024];

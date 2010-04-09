@@ -38,7 +38,8 @@ public class MainWindow extends JFrame {
 	public void goScore(){
 		f.remove(setupWindow);
 		f.add(scoreWindow, BorderLayout.CENTER);
-		f.pack();		
+		f.pack();	
+		f.setSize(648,480);
 		f.setVisible(true);
 	}
 	
@@ -46,6 +47,7 @@ public class MainWindow extends JFrame {
 		f.remove(scoreWindow);
 		f.add(setupWindow, BorderLayout.CENTER);
 		f.pack();		
+		f.setSize(648,480);
 		f.setVisible(true);
 	}
 	

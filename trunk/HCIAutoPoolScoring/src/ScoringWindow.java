@@ -138,7 +138,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		gridBagLayout = new GridBagLayout();
 		gridConstraints = new GridBagConstraints();
 		layeredPane.setLayout(gridBagLayout);
-		layeredPane.setSize(PANEL_WIDTH*2, PANEL_HEIGHT*2);
+		//layeredPane.setSize(PANEL_WIDTH*2, PANEL_HEIGHT*2);
+		//this.setSize(1024, 768);
 		
 		rackScore = new JLabel("Rack Score:", JLabel.RIGHT);
 		rackDetails = new JLabel("Rack Details:", JLabel.RIGHT);
@@ -667,6 +668,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	p1GoalF.setEditable(true);
     	p2GoalF.setEditable(true);
     	    	
+    	restartButton.setEnabled(false);
     	replayButton.setEnabled(false);
     	statsButton.setEnabled(false);
     	
@@ -745,7 +747,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	    	p1GoalF.setEditable(false);
     	    	p2GoalF.setEditable(false);    	    	
     	    	replayButton.setEnabled(true);
-    	    	statsButton.setEnabled(true);    	    	
+    	    	statsButton.setEnabled(true);  
+    	    	restartButton.setEnabled(true);
     	    	buttonPanel.remove(doneButton);
     	    	buttonPanel.add(editButton, 2);
     	    	buttonPanel.validate();

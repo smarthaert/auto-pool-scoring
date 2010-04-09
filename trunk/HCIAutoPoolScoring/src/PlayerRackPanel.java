@@ -197,25 +197,32 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 					//dropped on the same person...do nothing
 				} else if (dropPanel == 1) {
 					//dropped on player 2
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp1--;
 					AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.removeBall(ballDragging);
 					BufferedImage img = AutoPoolScorer.mainWindow.scoreWindow.virtualRack.getBallImg(ballDragging);
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp2++;
 					AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.addBall(img, ballDragging);
 				} else if (dropPanel == 2) {
 					//dropped on the virtual rack
 					AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.removeBall(ballDragging);
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp1--;
 					AutoPoolScorer.mainWindow.scoreWindow.virtualRack.addBall(ballDragging);
 				}				
 			} else {
 				int dropPanel =  dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
 				System.out.println("dropPanel " + dropPanel );
+				System.out.println("dragX " + dragX);
 				
-				if (dropPanel == 0 && !p1clicked) { 
+				if (dragX < 0) { 
 					//dropped on player 1
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp2--;
 					AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.removeBall(ballDragging);
 					BufferedImage img = AutoPoolScorer.mainWindow.scoreWindow.virtualRack.getBallImg(ballDragging);
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp1++;
 					AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails.addBall(img, ballDragging);
 				} else if (dropPanel == 1 ) {
 					//dropped on the virtual rack
+					AutoPoolScorer.mainWindow.scoreWindow.sunkp2--;
 					AutoPoolScorer.mainWindow.scoreWindow.p2RackDetails.removeBall(ballDragging);
 					BufferedImage img = AutoPoolScorer.mainWindow.scoreWindow.virtualRack.getBallImg(ballDragging);
 					AutoPoolScorer.mainWindow.scoreWindow.virtualRack.addBall(ballDragging);

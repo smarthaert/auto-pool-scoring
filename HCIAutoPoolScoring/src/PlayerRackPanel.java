@@ -60,8 +60,9 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 			AutoPoolScorer.mainWindow.scoreWindow.p2RackScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2RackScore));
 			AutoPoolScorer.mainWindow.scoreWindow.p2TotalScore++;
 			AutoPoolScorer.mainWindow.scoreWindow.p2TotalScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2TotalScore));
-		}		
-		repaint();
+		}
+		//repaint();
+		AutoPoolScorer.mainWindow.scoreWindow.repaint();
 	}	
 	
 	
@@ -94,7 +95,8 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 	public void clearBalls() {
 		ball_images.clear();
 		ball_numbers.clear();
-		repaint();
+		//repaint();
+		AutoPoolScorer.mainWindow.scoreWindow.repaint();
 	}
 	
 	public void paintComponent(Graphics g) {		
@@ -109,8 +111,9 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 			x = (i / MAX_BALLS_PER_COLUMN) * (SCALED_DIMENSIONS + PADDING) + PADDING;
 			y = (i % MAX_BALLS_PER_COLUMN) * (SCALED_DIMENSIONS + PADDING) + PADDING;
 			
-			g.drawImage(img, x, y, x + SCALED_DIMENSIONS, y + SCALED_DIMENSIONS,
-					0, 0, img.getWidth(), img.getHeight(), null);					
+			if(((Integer)ball_numbers.elementAt(i)).intValue() != ballDragging){
+				g.drawImage(img, x, y, x + SCALED_DIMENSIONS, y + SCALED_DIMENSIONS, 0, 0, img.getWidth(), img.getHeight(), null);
+			}
 			
 			ball_points.add(new Point(x, y));
 		}
@@ -129,26 +132,22 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse clicked (" + e.getX() + "," + e.getY() + ")");
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("plrRack enter");
-		
+		//System.out.println("plrRack enter");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("virRack exit");
+		//System.out.println("virRack exit");
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("virRack mouse pressed (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("virRack mouse pressed (" + e.getX() + "," + e.getY() + ")");
 				
 		int ballNum = ballAt(e.getX(), e.getY());
 		if(ballNum>0){			
@@ -157,14 +156,15 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 			dragY = e.getY();
 			
 			if (e.getComponent() == AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails ) {
-				System.out.println("Player 1 detailed rack panel clicked.");
+				//System.out.println("Player 1 detailed rack panel clicked.");
 				p1clicked = true;
 			} else {
-				System.out.println("Player 2 detailed rack panel clicked.");
+				//System.out.println("Player 2 detailed rack panel clicked.");
 				p1clicked = false;
 			}
 
 			//repaint();
+			AutoPoolScorer.mainWindow.scoreWindow.repaint();
 		}
 	}
 	
@@ -181,18 +181,20 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
 
+		/*
 		if (e.getComponent() == AutoPoolScorer.mainWindow.scoreWindow.p1RackDetails ) {
 			System.out.println("Player 1 detailed rack panel mouse released.");
 		} else {
 			System.out.println("Player 2 detailed rack panel mouse released.");
 		}
+		*/
 		
 		if (ballDragging > 0) {
 			if (p1clicked) {
 				int dropPanel =  dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
-				System.out.println("dropPanel " + dropPanel );
+				//System.out.println("dropPanel " + dropPanel );
 				if (dropPanel <= 0) {
 					//dropped on the same person...do nothing
 				} else if (dropPanel == 1) {
@@ -210,8 +212,8 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 				}				
 			} else {
 				int dropPanel =  dragX / (AutoPoolScorer.mainWindow.scoreWindow.VIRTUAL_RACK_WIDTH+2);
-				System.out.println("dropPanel " + dropPanel );
-				System.out.println("dragX " + dragX);
+				//System.out.println("dropPanel " + dropPanel );
+				//System.out.println("dragX " + dragX);
 				
 				if (dragX < 0) { 
 					//dropped on player 1
@@ -233,13 +235,13 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 			AutoPoolScorer.mainWindow.scoreWindow.virtualRack.ballDragging = 0;
 			AutoPoolScorer.mainWindow.scoreWindow.repaint();
 		}
+		
 
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("plrRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("plrRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
 		
 		dragX = e.getX();
 		dragY = e.getY();
@@ -270,7 +272,6 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("plrRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("plrRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}	
 }

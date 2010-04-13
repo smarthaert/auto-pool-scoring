@@ -2,7 +2,6 @@
 
 Player Score Editing
   * use edit and done button per score textfield/label
-  * show scores as labels until editable, then switch to text boxes
   * add selection for whose turn at player setup
   * add a help button on main screen to toggle the presence of located instructions
 *Video* integration

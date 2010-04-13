@@ -1,7 +1,10 @@
 #summary A list of unfinished features
 
 Player Score Editing
-  * ball _dragging_ from plr rack panels
+  * remove text fields where something isn't editable
+  * show scores as labels until editable, then switch to text boxes
+  * add selection for whose turn at player setup
+  * add a help button on main screen to toggle the presence of located instructions
 *Video* integration
   * live display of video
   * replay

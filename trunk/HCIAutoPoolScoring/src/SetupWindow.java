@@ -9,12 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class SetupWindow extends JPanel 
-implements MouseListener, Runnable, ActionListener, ComponentListener{
+implements Runnable, ActionListener{
 
 	private JLayeredPane layeredPane = null;
-	private JLabel enterNames = null;
-	private JLabel player1lbl = null;
-	private JLabel player2lbl = null;
 	private JTextField player1name = null;
 	private JTextField player2name = null;
 	private JButton continueButton = null;
@@ -34,7 +31,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		
 		gridConstraints.gridy = 0;
 		gridConstraints.gridx = 2;
-		layeredPane.add(enterNames = new JLabel("Enter Player Names", JLabel.LEFT), gridConstraints);
+		layeredPane.add(new JLabel("Enter Player Names", JLabel.LEFT), gridConstraints);
 		clearGridConstraints(gridConstraints);
 
 		gridConstraints.gridy = 1;
@@ -45,12 +42,12 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		
 		gridConstraints.gridy = 2;
 		gridConstraints.gridx = 0;
-		layeredPane.add(player1lbl = new JLabel("Player One", JLabel.LEFT), gridConstraints);
+		layeredPane.add(new JLabel("Player One", JLabel.LEFT), gridConstraints);
 		clearGridConstraints(gridConstraints);
 		
 		gridConstraints.gridy = 2;
 		gridConstraints.gridx = 3;
-		layeredPane.add(player2lbl = new JLabel("Player Two", JLabel.LEFT), gridConstraints);
+		layeredPane.add(new JLabel("Player Two", JLabel.LEFT), gridConstraints);
 		clearGridConstraints(gridConstraints);
 		
 		gridConstraints.gridy = 3;
@@ -76,8 +73,6 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		continueButton.addActionListener(this);
 		continueButton.setActionCommand("continue");
 		
-		addMouseListener(this);
-		addComponentListener(this);
 		setDoubleBuffered(true);
 		add(layeredPane, BorderLayout.CENTER);
 	}
@@ -95,32 +90,6 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 		gridConstraints.weightx = 0;
 		gridConstraints.weighty = 0;	
 	}
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		//System.out.println("mouse entered");
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		//System.out.println("mouse exited");
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
-	}
 
 	@Override
 	public void run() {
@@ -131,27 +100,26 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "continue") {
-			System.out.println("continue");			
+			//System.out.println("continue");			
 			
-			if (!player1name.getText().isEmpty()) {
-				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText(this.player1name.getText());
-				AutoPoolScorer.mainWindow.scoreWindow.p1Name = this.player1name.getText();
+			if (!player1name.getText().trim().isEmpty()) {
+				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText(this.player1name.getText().trim());
+				AutoPoolScorer.mainWindow.scoreWindow.p1Name = this.player1name.getText().trim();
 			} else {
-				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText("Player1");
-				AutoPoolScorer.mainWindow.scoreWindow.p1Name = "Player1";
+				AutoPoolScorer.mainWindow.scoreWindow.p1IDF.setText("Player 1");
+				AutoPoolScorer.mainWindow.scoreWindow.p1Name = "Player 1";
 			}
 			
-			if (!player2name.getText().isEmpty()) {
-				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText());
-				AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText();
-
+			if (!player2name.getText().trim().isEmpty()) {
+				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText(this.player2name.getText().trim());
+				AutoPoolScorer.mainWindow.scoreWindow.p2Name = this.player2name.getText().trim();
 			} else {
-				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText("Player2");
-				AutoPoolScorer.mainWindow.scoreWindow.p2Name = "Player2";
+				AutoPoolScorer.mainWindow.scoreWindow.p2IDF.setText("Player 2");
+				AutoPoolScorer.mainWindow.scoreWindow.p2Name = "Player 2";
 			}
 			
-			System.out.println("p1IDF" + AutoPoolScorer.mainWindow.scoreWindow.p1IDF.getText());
-			System.out.println("p2IDF" + AutoPoolScorer.mainWindow.scoreWindow.p2IDF.getText());
+			//System.out.println("p1IDF" + AutoPoolScorer.mainWindow.scoreWindow.p1IDF.getText().trim());
+			//System.out.println("p2IDF" + AutoPoolScorer.mainWindow.scoreWindow.p2IDF.getText().trim());
 
 			
 			AutoPoolScorer.mainWindow.scoreWindow.clearRack();
@@ -160,34 +128,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener{
 			this.player1name.setText("");
 			this.player2name.setText("");
 			
-		} else if (e.getActionCommand() == "quit") {
-			System.out.println("quit");
-			
 		}
-	}
-
-	@Override
-	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

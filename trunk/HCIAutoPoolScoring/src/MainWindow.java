@@ -11,7 +11,6 @@ public class MainWindow extends JFrame {
 	protected SetupWindow setupWindow = null;
 	
 	public MainWindow() {
-
 		f = new JFrame("Automatic Straight Pool Scoring System");
 		f.setLayout(new BorderLayout());
 		
@@ -22,17 +21,7 @@ public class MainWindow extends JFrame {
 		
 		rmc = new RemoteCommandInterceptor(scoreWindow);
 		
-		//f.add(scoreWindow, BorderLayout.CENTER);
-		//f.add(setupWindow, BorderLayout.CENTER);
 		goSetup();
-		
-		
-		//webcamPanel = new SwingCapture();
-		//f.add(webcamPanel, BorderLayout.SOUTH);
-		
-		//f.pack();		
-		//f.setVisible(true);
-		
 	}
 	
 	public void goScore(){

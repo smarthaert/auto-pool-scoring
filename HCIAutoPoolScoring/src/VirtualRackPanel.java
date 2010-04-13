@@ -197,7 +197,7 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 		
 		if(ballDragging > 0){
 			Point p = ball_points[ballDragging];
-			System.out.println("dragging " + ballDragging);
+			//System.out.println("dragging " + ballDragging);
 			p.x = dragX-SCALED_DIMENSIONS/2;
 			p.y = dragY-SCALED_DIMENSIONS/2;
 			g.drawImage(ball_images[ballDragging], p.x, p.y, p.x + SCALED_DIMENSIONS, p.y + SCALED_DIMENSIONS, 
@@ -209,15 +209,16 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse pressed (" + e.getX() + "," + e.getY() + ")");
 		
 		int selected = ballAt(e.getX(), e.getY());
 		if(selected>0 && ball_displayed[selected]){
-			System.out.println("selected: " + selected);
+			//System.out.println("selected: " + selected);
 			ballDragging = selected;
 			dragX = e.getX();
 			dragY = e.getY();
-			repaint();
+			//repaint();
+			AutoPoolScorer.mainWindow.scoreWindow.repaint();
 		}
 		
 	}
@@ -240,7 +241,7 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("mouse released (" + e.getX() + "," + e.getY() + ")");
 		
 		if(ballDragging>0){
 			if(dragY >= 0 && dragY <= getHeight() && dragX<0){
@@ -265,17 +266,16 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	}
 	
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("virRack enter");
+		//System.out.println("virRack enter");
 	}
 	
 	public void mouseExited(MouseEvent e) {
-		System.out.println("virRack exit");
+		//System.out.println("virRack exit");
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("virRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("virRack mouseDragged (" + e.getX() + "," + e.getY() + ")");
 		dragX = e.getX();
 		dragY = e.getY();
 		//repaint();
@@ -297,6 +297,6 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("virRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
+		//System.out.println("virRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}
 }

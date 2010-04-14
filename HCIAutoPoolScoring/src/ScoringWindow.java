@@ -580,7 +580,6 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 				    options,
 				    options[1]);		
 			if (n == 1) { // really quit the game
-				//TODO this should cause the system to display the login/setup menu system
 				resetStats();
 				resetScores();
 				AutoPoolScorer.mainWindow.goSetup();

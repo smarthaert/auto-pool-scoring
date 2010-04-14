@@ -296,7 +296,6 @@ public class VirtualRackPanel extends JPanel implements MouseListener, MouseMoti
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		//System.out.println("virRack mouseMoved (" + e.getX() + "," + e.getY() + ")");
 	}
 }

@@ -439,7 +439,7 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 
 		restartButton.addActionListener(this);
 		statsButton.addActionListener(this);
-		editButton.addActionListener(this);
+		//editButton.addActionListener(this);
 		helpButton.addActionListener(this);
 
 		restartButton.setActionCommand("restart");
@@ -449,7 +449,7 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 
 		buttonPanel.add(restartButton);
 		buttonPanel.add(statsButton);
-		buttonPanel.add(editButton);
+		//buttonPanel.add(editButton);
 		buttonPanel.add(helpButton);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
@@ -694,6 +694,7 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 			p1TotalScore -= 2;
 			p1RackScoreF.setText(Integer.toString(p1RackScore));
 			p1TotalScoreF.setText(Integer.toString(p1TotalScore));
+			p1TotalLabel.setText(Integer.toString(p1TotalScore));
 
 		} else {
 			faultp2++;
@@ -707,6 +708,7 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 			p2TotalScore -= 2;
 			p2RackScoreF.setText(Integer.toString(p2RackScore));
 			p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+			p2TotalLabel.setText(Integer.toString(p2TotalScore));
 		}
 		animateTurnSelector();
 	}

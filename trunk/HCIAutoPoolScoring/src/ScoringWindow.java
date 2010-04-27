@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.image.*;
 import javax.*;
 import java.awt.*;
@@ -70,10 +71,12 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 	private JButton restartButton = null;
 	private JButton editButton = null;
 	private JButton statsButton = null;
-	private JButton replayButton = null;
+	private JButton helpButton = null;
 	private JButton doneButton = null;
 	
 	private JLayeredPane layeredPane = null;
+	
+	private  JPanel helpPanel = null;
 	
 	protected final int PANEL_WIDTH = 1024;
 	protected final int PANEL_HEIGHT = 768;
@@ -319,7 +322,15 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		gridConstraints.gridx = 7;
 		gridConstraints.gridheight = 3;
 		layeredPane.add(vert4, gridConstraints, 0);
-		clearGridConstraints();		
+		clearGridConstraints();	
+		
+		helpPanel = new HelpPanel();
+		helpPanel.setOpaque(false);
+		helpPanel.setVisible(false);
+		gridConstraints.gridheight = 12;
+		gridConstraints.gridwidth = 12;
+		layeredPane.add(helpPanel,gridConstraints, 3);
+		clearGridConstraints();
 		
 		addMouseListener(this);
 		addComponentListener(this);
@@ -330,23 +341,23 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 		restartButton = new JButton ("Restart");
 		statsButton = new JButton ("Player Statistics");
 		editButton = new JButton ("Edit Score");
-		replayButton = new JButton ("Shot Replay");
+		helpButton = new JButton ("Help");
 		doneButton = new JButton ("Done");
 		
 		restartButton.addActionListener(this);
 		statsButton.addActionListener(this);
 		editButton.addActionListener(this);
-		replayButton.addActionListener(this);
+		helpButton.addActionListener(this);
 				
 		restartButton.setActionCommand("restart");
 		statsButton.setActionCommand("stats");
 		editButton.setActionCommand("edit");
-		replayButton.setActionCommand("replay");
+		helpButton.setActionCommand("help");
 		
 		buttonPanel.add(restartButton);
 		buttonPanel.add(statsButton);
 		buttonPanel.add(editButton);
-		buttonPanel.add(replayButton);
+		buttonPanel.add(helpButton);
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
@@ -593,6 +604,8 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
 			
 		} else if (e.getActionCommand() == "edit") {
 			editScore();
+		} else if (e.getActionCommand() == "help") {
+			helpPanel.setVisible(!helpPanel.isVisible());
 		}
 	}
 	
@@ -668,7 +681,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	p2GoalF.setEditable(true);
     	    	
     	restartButton.setEnabled(false);
-    	replayButton.setEnabled(false);
+    	//helpButton.setEnabled(false);
     	statsButton.setEnabled(false);
     	
     	buttonPanel.remove(editButton);
@@ -745,7 +758,7 @@ implements MouseListener, Runnable, ActionListener, ComponentListener {
     	    	p2TotalScoreF.setEditable(false);
     	    	p1GoalF.setEditable(false);
     	    	p2GoalF.setEditable(false);    	    	
-    	    	replayButton.setEnabled(true);
+    	    	//helpButton.setEnabled(true);
     	    	statsButton.setEnabled(true);  
     	    	restartButton.setEnabled(true);
     	    	buttonPanel.remove(doneButton);

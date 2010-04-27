@@ -1,10 +1,15 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.image.*;
+
 import javax.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 		ActionListener, ComponentListener {
@@ -43,14 +48,35 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 	private JLabel totalScore = null;
 	private JLabel gameGoal = null;
 
-	protected JTextField p1IDF = null;
-	protected JTextField p2IDF = null;
-	protected JTextField p1RackScoreF = null;
-	protected JTextField p2RackScoreF = null;
+	protected JPanel p1GoalCards;
+	protected JPanel p2GoalCards;
+	protected JPanel p1TotalCards;
+	protected JPanel p2TotalCards;
+	
+	protected JLabel p1IDF = null;
+	protected JLabel p2IDF = null;
+	protected JLabel p1RackScoreF = null;
+	protected JLabel p2RackScoreF = null;
+	
 	protected JTextField p1TotalScoreF = null;
 	protected JTextField p2TotalScoreF = null;
 	private JTextField p1GoalF = null;
 	private JTextField p2GoalF = null;
+	
+	protected JLabel p1TotalLabel;
+	protected JLabel p2TotalLabel;
+	protected JLabel p1GoalLabel;
+	protected JLabel p2GoalLabel;
+	
+	protected JButton p1TotalEditButton;
+	protected JButton p2TotalEditButton;
+	protected JButton p1GoalEditButton;
+	protected JButton p2GoalEditButton;
+	
+	protected JButton p1TotalDoneButton;
+	protected JButton p2TotalDoneButton;
+	protected JButton p1GoalDoneButton;
+	protected JButton p2GoalDoneButton;
 
 	protected PlayerRackPanel p1RackDetails = null;
 	protected PlayerRackPanel p2RackDetails = null;
@@ -151,38 +177,70 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 		gameGoal = new JLabel("Goal:", JLabel.RIGHT);
 
 		int ncols = Math.max(p1Name.length(), p2Name.length());
-		p1IDF = new JTextField(p1Name, ncols);
-		p2IDF = new JTextField(p2Name, ncols);
-		p1RackScoreF = new JTextField("0", 3);
-		p2RackScoreF = new JTextField("0", 3);
+		p1IDF = new JLabel(p1Name);
+		p2IDF = new JLabel(p2Name);
+		p1RackScoreF = new JLabel("0");
+		p2RackScoreF = new JLabel("0");
 		p1RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH,
 				VIRTUAL_RACK_HEIGHT, 1);
 		p2RackDetails = new PlayerRackPanel(VIRTUAL_RACK_WIDTH,
 				VIRTUAL_RACK_HEIGHT, 2);
 		p1TotalScoreF = new JTextField("0", 3);
 		p2TotalScoreF = new JTextField("0", 3);
+				
+		p1TotalLabel = new JLabel("0", JLabel.CENTER);
+		p2TotalLabel = new JLabel("0", JLabel.CENTER);
+		p1GoalLabel = new JLabel(Integer.toString(p1WinsAt), JLabel.CENTER);
+		p2GoalLabel = new JLabel(Integer.toString(p2WinsAt), JLabel.CENTER);
+		
+		p1TotalEditButton = new JButton(loadIcon("edit.jpg"));
+		p2TotalEditButton = new JButton(loadIcon("edit.jpg"));
+		p1GoalEditButton = new JButton(loadIcon("edit.jpg"));
+		p2GoalEditButton = new JButton(loadIcon("edit.jpg"));
+		
+		p1TotalDoneButton = new JButton(loadIcon("done.jpg"));
+		p2TotalDoneButton = new JButton(loadIcon("done.jpg"));
+		p1GoalDoneButton = new JButton(loadIcon("done.jpg"));
+		p2GoalDoneButton = new JButton(loadIcon("done.jpg"));
+		
+		p1TotalEditButton.addActionListener(this);
+		p2TotalEditButton.addActionListener(this);
+		p1GoalEditButton.addActionListener(this);
+		p2GoalEditButton.addActionListener(this);
+		p1TotalDoneButton.addActionListener(this);
+		p2TotalDoneButton.addActionListener(this);
+		p1GoalDoneButton.addActionListener(this);
+		p2GoalDoneButton.addActionListener(this);
+		
+		p1TotalEditButton.setActionCommand("p1_total_edit");
+		p2TotalEditButton.setActionCommand("p2_total_edit");
+		p1GoalEditButton.setActionCommand("p1_goal_edit");
+		p2GoalEditButton.setActionCommand("p2_goal_edit");
+		p1TotalDoneButton.setActionCommand("p1_total_done");
+		p2TotalDoneButton.setActionCommand("p2_total_done");
+		p1GoalDoneButton.setActionCommand("p1_goal_done");
+		p2GoalDoneButton.setActionCommand("p2_goal_done");
+	
+		
 		p1GoalF = new JTextField(Integer.toString(p1WinsAt), 3);
 		p2GoalF = new JTextField(Integer.toString(p2WinsAt), 3);
 		virtualRack = new VirtualRackPanel(VIRTUAL_RACK_WIDTH,
 				VIRTUAL_RACK_HEIGHT);
 
-		p1IDF.setHorizontalAlignment(JTextField.CENTER);
-		p2IDF.setHorizontalAlignment(JTextField.CENTER);
-		p1RackScoreF.setHorizontalAlignment(JTextField.CENTER);
-		p2RackScoreF.setHorizontalAlignment(JTextField.CENTER);
+		p1TotalScoreF.setEditable(true);
+		p2TotalScoreF.setEditable(true);
+		p1GoalF.setEditable(true);
+		p2GoalF.setEditable(true);
+		
+		
+		p1IDF.setHorizontalAlignment(JLabel.CENTER);
+		p2IDF.setHorizontalAlignment(JLabel.CENTER);
+		p1RackScoreF.setHorizontalAlignment(JLabel.CENTER);
+		p2RackScoreF.setHorizontalAlignment(JLabel.CENTER);
 		p1TotalScoreF.setHorizontalAlignment(JTextField.CENTER);
 		p2TotalScoreF.setHorizontalAlignment(JTextField.CENTER);
 		p1GoalF.setHorizontalAlignment(JTextField.CENTER);
 		p2GoalF.setHorizontalAlignment(JTextField.CENTER);
-
-		p1IDF.setEditable(false);
-		p2IDF.setEditable(false);
-		p1RackScoreF.setEditable(false);
-		p2RackScoreF.setEditable(false);
-		p1TotalScoreF.setEditable(false);
-		p2TotalScoreF.setEditable(false);
-		p1GoalF.setEditable(false);
-		p2GoalF.setEditable(false);
 
 		p1RackDetails.setOpaque(true);
 		p2RackDetails.setOpaque(true);
@@ -199,6 +257,8 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 		vert3 = new JSeparator(JSeparator.VERTICAL);
 		vert4 = new JSeparator(JSeparator.VERTICAL);
 
+		JPanel card1, card2;
+		
 		gridConstraints.gridy = 0;
 		gridConstraints.gridx = 2;
 		layeredPane.add(p1IDF, gridConstraints, 0);
@@ -251,12 +311,30 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 
 		gridConstraints.gridy = 6;
 		gridConstraints.gridx = 2;
-		layeredPane.add(p1TotalScoreF, gridConstraints, 0);
+		card1 = new JPanel();
+		card2 = new JPanel();
+		p1TotalCards = new JPanel(new CardLayout());
+		card1.add(p1TotalLabel);
+		card1.add(p1TotalEditButton);
+		card2.add(p1TotalScoreF);
+		card2.add(p1TotalDoneButton);
+		p1TotalCards.add(card1, "");
+		p1TotalCards.add(card2, "");
+		layeredPane.add(p1TotalCards, gridConstraints, 0);
 		clearGridConstraints();
 
 		gridConstraints.gridy = 6;
 		gridConstraints.gridx = 4;
-		layeredPane.add(p2TotalScoreF, gridConstraints, 0);
+		card1 = new JPanel();
+		card2 = new JPanel();
+		p2TotalCards = new JPanel(new CardLayout());
+		card1.add(p2TotalLabel);
+		card1.add(p2TotalEditButton);
+		card2.add(p2TotalScoreF);
+		card2.add(p2TotalDoneButton);
+		p2TotalCards.add(card1, "");
+		p2TotalCards.add(card2, "");
+		layeredPane.add(p2TotalCards, gridConstraints, 0);
 		clearGridConstraints();
 
 		gridConstraints.gridy = 8;
@@ -266,12 +344,31 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 
 		gridConstraints.gridy = 8;
 		gridConstraints.gridx = 2;
-		layeredPane.add(p1GoalF, gridConstraints, 0);
+		
+		card1 = new JPanel();
+		card2 = new JPanel();
+		p1GoalCards = new JPanel(new CardLayout());
+		card1.add(p1GoalLabel);
+		card1.add(p1GoalEditButton);
+		card2.add(p1GoalF);
+		card2.add(p1GoalDoneButton);
+		p1GoalCards.add(card1, "");
+		p1GoalCards.add(card2, "");
+		layeredPane.add(p1GoalCards, gridConstraints, 0);
 		clearGridConstraints();
 
 		gridConstraints.gridy = 8;
 		gridConstraints.gridx = 4;
-		layeredPane.add(p2GoalF, gridConstraints, 0);
+		card1 = new JPanel();
+		card2 = new JPanel();
+		p2GoalCards = new JPanel(new CardLayout());
+		card1.add(p2GoalLabel);
+		card1.add(p2GoalEditButton);
+		card2.add(p2GoalF);
+		card2.add(p2GoalDoneButton);
+		p2GoalCards.add(card1, "");
+		p2GoalCards.add(card2, "");
+		layeredPane.add(p2GoalCards, gridConstraints, 0);
 		clearGridConstraints();
 
 		gridConstraints.gridy = 1;
@@ -370,6 +467,26 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 		gridConstraints.weightx = 0;
 		gridConstraints.weighty = 0;
 	}
+	
+	public ImageIcon loadIcon(String filename) {		
+		String imageSrc = null;
+		BufferedImage bi;
+		ImageIcon img = null;
+		
+		final int ICON_HEIGHT = 20;
+		final int ICON_WIDTH = 20;
+		
+		try {
+			imageSrc = "images" + File.separator + filename;	
+			bi = ImageIO.read(new FileInputStream(imageSrc));
+			img = new ImageIcon(bi.getScaledInstance(ICON_WIDTH, ICON_HEIGHT, 0));
+
+		} catch (IOException e) {
+			System.out.println("IOException " + e);
+		}
+		return img;
+	}
+
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -651,10 +768,74 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 			new StatsWindow();
 
 		} else if (e.getActionCommand() == "edit") {
-			editScore();
+//			editScore();
 		} else if (e.getActionCommand() == "help") {
 			helpSet = !helpSet;
 			repaint();
+		} else if (e.getActionCommand() == "p1_total_edit") {
+			CardLayout c1 = (CardLayout)(p1TotalCards.getLayout());
+			p1TotalScoreF.setText(p1TotalLabel.getText());
+			c1.next(p1TotalCards);
+		} else if (e.getActionCommand() == "p2_total_edit") {
+			CardLayout c1 = (CardLayout)(p2TotalCards.getLayout());
+			p2TotalScoreF.setText(p2TotalLabel.getText());
+			c1.next(p2TotalCards);
+		} else if (e.getActionCommand() == "p1_goal_edit")  {
+			CardLayout c1 = (CardLayout)(p1GoalCards.getLayout());
+			p1GoalF.setText(p1GoalLabel.getText());
+			c1.next(p1GoalCards);
+		} else if (e.getActionCommand() == "p2_goal_edit")  {
+			CardLayout c1 = (CardLayout)(p2GoalCards.getLayout());
+			p2GoalF.setText(p2GoalLabel.getText());
+			c1.next(p2GoalCards);
+		} else if (e.getActionCommand() == "p1_total_done") {
+			CardLayout c1 = (CardLayout)(p1TotalCards.getLayout());			
+			if (isValidNumber(p1TotalScoreF.getText())) {
+				p1TotalScore = Integer.parseInt(p1TotalScoreF.getText());
+				p1TotalLabel.setText(Integer.toString(p1TotalScore));
+			} else {
+				p1TotalScoreF.setText(Integer.toString(p1TotalScore));
+				JOptionPane.showMessageDialog(null, "Error, " + p1Name
+						+ "'s total score is not a valid number.",
+						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+			}
+			c1.previous(p1TotalCards);
+		} else if (e.getActionCommand() == "p2_total_done") {
+			CardLayout c1 = (CardLayout)(p2TotalCards.getLayout());
+			if (isValidNumber(p2TotalScoreF.getText())) {
+				p2TotalScore = Integer.parseInt(p2TotalScoreF.getText());
+				p2TotalLabel.setText(Integer.toString(p2TotalScore));
+			} else {
+				p2TotalScoreF.setText(Integer.toString(p2TotalScore));
+				JOptionPane.showMessageDialog(null, "Error, " + p2Name
+						+ "'s total score is not a valid number.",
+						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+			}
+			c1.previous(p2TotalCards);
+		} else if (e.getActionCommand() == "p1_goal_done")  {
+			CardLayout c1 = (CardLayout)(p1GoalCards.getLayout());
+			if (isValidNumber(p1GoalF.getText())) {
+				p1WinsAt = Integer.parseInt(p1GoalF.getText());
+				p1GoalLabel.setText(Integer.toString(p1WinsAt));
+			} else {
+				p1GoalF.setText(Integer.toString(p1WinsAt));
+				JOptionPane.showMessageDialog(null, "Error, " + p1Name
+						+ "'s game objective is not a valid number.",
+						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+			}
+			c1.previous(p1GoalCards);
+		} else if (e.getActionCommand() == "p2_goal_done")  {
+			CardLayout c1 = (CardLayout)(p2GoalCards.getLayout());
+			if (isValidNumber(p2GoalF.getText())) {
+				p2WinsAt = Integer.parseInt(p2GoalF.getText());
+				p2GoalLabel.setText(Integer.toString(p2WinsAt));
+			} else {
+				p2GoalF.setText(Integer.toString(p2WinsAt));
+				JOptionPane.showMessageDialog(null, "Error, " + p2Name
+						+ "'s game objective is not a valid number.",
+						"User Edit Score Error", JOptionPane.ERROR_MESSAGE);
+			}
+			c1.previous(p2GoalCards);
 		}
 	}
 
@@ -676,6 +857,25 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 		p2RackScoreF.setText(Integer.toString(p2RackScore));
 		p1GoalF.setText(Integer.toString(p1WinsAt));
 		p2GoalF.setText(Integer.toString(p2WinsAt));
+		
+		p1GoalLabel.setText(Integer.toString(p1WinsAt));
+		p2GoalLabel.setText(Integer.toString(p2WinsAt));
+		p1TotalLabel.setText(Integer.toString(p1TotalScore));
+		p2TotalLabel.setText(Integer.toString(p2TotalScore));
+		
+		/* reset all the card layouts */
+		CardLayout c1;
+		c1 = (CardLayout) p1TotalCards.getLayout();
+		c1.first(p1TotalCards);
+		
+		c1 = (CardLayout) p2TotalCards.getLayout();
+		c1.first(p2TotalCards);
+
+		c1 = (CardLayout) p1GoalCards.getLayout();
+		c1.first(p1GoalCards);
+
+		c1 = (CardLayout) p2GoalCards.getLayout();
+		c1.first(p2GoalCards);
 	}
 
 	private void resetStats() {

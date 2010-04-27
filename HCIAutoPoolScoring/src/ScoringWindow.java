@@ -416,15 +416,27 @@ public class ScoringWindow extends JPanel implements MouseListener, Runnable,
 			g2.draw(p);
 
 			if (helpSet) {
+				int dx = vert1.getX() - 160;
+				int dy = vert1.getY() - 90;
 				g2.setColor(Color.BLUE);
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
 				Font font = new Font("Serif", Font.BOLD, 14);
 				g2.setFont(font);
-				g2.drawString("Help test", 0, 10);
 				s = new BasicStroke(1);
 				g2.setStroke(s);
-				drawArrow(g2, 60, 10, 80, 15, -1);
+				g2.drawString("Select who is playing (click to switch)", 170+dx, 30+dy);
+				drawArrow(g2, 290+dx, 40+dy, x_points[0], 70+dy, -1);
+				g2.drawString("ball(s) scored", 20+dx, 225+dy);
+				g2.drawString("by each player", 20+dx, 240+dy);
+				g2.drawString("(drag and drop)", 20+dx, 255+dy);
+				drawArrow(g2, 110+dx, 240+dy, 210+dx, 200+dy, -1);
+				drawArrow(g2, 110+dx, 240+dy, 350+dx, 200+dy, -1);
+				g2.drawString("ball(s) on the table", 470+dx, 60+dy);
+				g2.drawString("(drag and drop to correct)", 470+dx, 80+dy);
+				drawArrow(g2, 520+dx, 90+dy, 505+dx, 160+dy, -1);
+				g2.drawString("click to stop displaying help", helpButton.getX(), buttonPanel.getY()-50);
+				drawArrow(g2, helpButton.getX()+70, buttonPanel.getY() - 45, helpButton.getX()+50, buttonPanel.getY() , -1);
 			}
 		}
 

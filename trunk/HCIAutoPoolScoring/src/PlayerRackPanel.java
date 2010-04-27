@@ -81,13 +81,14 @@ public class PlayerRackPanel extends JPanel implements MouseListener, MouseMotio
 					AutoPoolScorer.mainWindow.scoreWindow.p1RackScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p1RackScore));
 					AutoPoolScorer.mainWindow.scoreWindow.p1TotalScore--;
 					AutoPoolScorer.mainWindow.scoreWindow.p1TotalScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p1TotalScore));
+					AutoPoolScorer.mainWindow.scoreWindow.p1TotalLabel.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p1TotalScore));
 
 				}else if(plrID == 2){
 					AutoPoolScorer.mainWindow.scoreWindow.p2RackScore--;
 					AutoPoolScorer.mainWindow.scoreWindow.p2RackScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2RackScore));
 					AutoPoolScorer.mainWindow.scoreWindow.p2TotalScore--;
 					AutoPoolScorer.mainWindow.scoreWindow.p2TotalScoreF.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2TotalScore));
-
+					AutoPoolScorer.mainWindow.scoreWindow.p2TotalLabel.setText(Integer.toString(AutoPoolScorer.mainWindow.scoreWindow.p2TotalScore));
 				}
 
 			}
